@@ -1,0 +1,52 @@
+openapi: 3.1.0
+info:
+  title: Ágora API
+  version: 0.0.1
+paths:
+  /actuator/health:
+    get:
+      operationId: getHealth
+      summary: Consultar el estado operativo del backend
+      responses:
+        '200':
+          description: Estado operativo disponible
+          content:
+            application/vnd.spring-boot.actuator.v3+json:
+              schema:
+                $ref: '#/components/schemas/Health'
+              example:
+                status: UP
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+              example:
+                status: UP
+  /api/v1/test:
+    get:
+      operationId: getTestMessage
+      summary: Comprobar el enrutamiento de la API
+      responses:
+        '200':
+          description: Mensaje de prueba
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [message]
+                properties:
+                  message:
+                    type: string
+                    const: Esto es una prueba
+              example:
+                message: Esto es una prueba
+components:
+  schemas:
+    Health:
+      type: object
+      additionalProperties: false
+      required: [status]
+      properties:
+        status:
+          type: string
+          const: UP
